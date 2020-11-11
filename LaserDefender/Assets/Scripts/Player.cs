@@ -2,22 +2,31 @@
 using System.Collections.Generic;
 using System.Xml.Schema;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class Player : MonoBehaviour
 {
     //serialize field makes the variable editable from Unity Editor
     [SerializeField] float moveSpeed = 10f;
-    [SerializeField] GameObject laserPrefab;
+    [SerializeField] GameObject laserPrefab; //a prefab, is something that isn't created with the start of the program, but only when needed. In the case, the laser spawns only when needed.
     [SerializeField] float laserSpeed = 15;
+    [SerializeField] float LaserFiringTime = 0.2f;
+
+    bool coroutineStarted = false;
 
     float xMin, xMax, yMin, yMax;
 
     float padding = 0.5f;
 
+    //fireCoroutine is a coroutine OBJECT, not a coroutine itself
+    Coroutine fireCoroutine;
+
     // Start is called before the first frame update
     void Start()
     {
+        //since this function is being called in start, it is only executed once, which is that the START of the game
         SetUpMoveBoundaries();
+        //printCoroutine = StartCoroutine(PrintAndWait());
     }
 
     // Update is called once per frame
@@ -25,6 +34,31 @@ public class Player : MonoBehaviour
     {
         Move();
         Fire();
+    }
+    ////coroutine example
+    //private IEnumerator PrintAndWait()
+    //{
+    //    print("Message 1");
+    //    //pause, wait for 10 seconds and return control
+    //    yield return new WaitForSeconds(10);
+    //    print("Message 2 after 10 seconds");
+    //}
+
+    //fires lasers continuously every 'LaserFiringTime' seconds
+    private IEnumerator FireContinuously()
+    {
+        while (true) //while coroutine is running
+        {
+            //create an instance called 'laser'
+            //this instance is only temporary
+            GameObject laser = Instantiate(laserPrefab, transform.position, Quaternion.identity) as GameObject;//Quaternion.identity means the player current rotation
+            //give the laser a velocity on the y axis
+            //velocity value is applied according to var laserSpeed
+            //the laser was given a body so that we are able to apply the laws of physics to it
+            laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
+            //wait for 0.2 seconds
+            yield return new WaitForSeconds(LaserFiringTime);
+        }
     }
 
     private void SetUpMoveBoundaries()
@@ -66,10 +100,23 @@ public class Player : MonoBehaviour
         //if fire is pressed
         if(Input.GetButtonDown("Fire1"))
         {
-            //create an instance
-            GameObject laser = Instantiate(laserPrefab, transform.position, Quaternion.identity)as GameObject;//Quaternion.identity means the player current rotation
-            //give the laser a velocity on the y axis
-            laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
+            //if coroutine has not started
+            //to avoid starting more than 1 coroutine
+            if(!coroutineStarted) //if (coroutineStarted == false)
+            {
+                //code to start coroutine
+                fireCoroutine = StartCoroutine(FireContinuously());
+                //set coroutineStarted = true
+                coroutineStarted = true;
+            }
+        }
+
+        //if fire button is not pressed
+        if (Input.GetButtonUp("Fire1"))
+        {
+            //code to start coroutine
+            StopCoroutine(fireCoroutine);
+            coroutineStarted = false;
         }
     }
 }
