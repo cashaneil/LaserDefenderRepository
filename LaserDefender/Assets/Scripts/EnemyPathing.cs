@@ -7,6 +7,7 @@ public class EnemyPathing : MonoBehaviour
     [SerializeField] List<Transform> waypointsList;
 
     [SerializeField] float enemyMoveSpeed = 2f;
+    [SerializeField] WaveConfig waveConfig;
 
     //var shows the next waypoint
     int wayPointIndex = 0;
@@ -18,6 +19,8 @@ public class EnemyPathing : MonoBehaviour
         //when transform.position is set before equal sign, it means set to that position
         //but when tranform.position is set AFTER equal sign, it means get that position (in this case, pos of waypoint(0) is waypointList)
         transform.position = waypointsList[wayPointIndex].transform.position;
+
+        waypointsList = waveConfig.GetWaypointsList();
     }
 
     // Update is called once per frame

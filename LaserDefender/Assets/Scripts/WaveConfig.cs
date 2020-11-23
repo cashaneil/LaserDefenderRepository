@@ -23,4 +23,45 @@ public class WaveConfig : ScriptableObject //scriptable object is an object that
 
     //enemiy movment speed
     [SerializeField] float enemyMoveSpeed = 2f;
+
+    public GameObject GetEnemyPrefab()
+    {
+        return enemyPrefab;
+    }
+
+    public List<Transform> GetWaypointsList()
+    {
+        //each wave can have different number of waypoints
+        var WaveWaypoints = new List<Transform>();
+
+        //access the Path prefab, read eac waypoint and add each waypoint to the new list
+        foreach (Transform child in pathPrefab.transform)
+        {
+            WaveWaypoints.Add(child);
+
+            /* waveWaypoints:
+             * [0] waypoint0
+             * [1] waypoint1
+             * [2] waypoint2
+             */
+        }
+
+        return WaveWaypoints;
+    }
+
+    public float GetTimeBetweenSpawns()
+    {
+        return timeBetweenSpawn;
+    }
+
+    public int GetNumberofEnemies()
+    {
+        return numberOfEnemies;
+    }
+
+    public float GetEnemyMoveSpeed()
+    {
+        return enemyMoveSpeed;
+    }
+
 }
