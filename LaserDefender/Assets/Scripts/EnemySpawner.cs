@@ -7,15 +7,20 @@ public class EnemySpawner : MonoBehaviour
     //a list of Waves
     [SerializeField] List<WaveConfig> waveConfigsList;
 
+    [SerializeField] bool looping = false;
+
     //start from wave 0
     int startingWave = 0;
     
     // Start is called before the first frame update
-    void Start()
+    IEnumerator Start()
     {
-        //set the currentWave to the 1st wave (0)
-        var currentWave = waveConfigsList[startingWave];
+        do
+        {
+            yield return StartCoroutine(SpawnAllWaves());
+        } while (looping == true); //or while(looping); because this means true by default
 
+        StartCoroutine(SpawnAllWaves());
     }
 
     // Update is called once per frame
@@ -36,7 +41,22 @@ public class EnemySpawner : MonoBehaviour
                 waveToSpawn.GetWaypointsList()[0].transform.position,
                 Quaternion.identity) as GameObject;//Quaternion.identity means to keep the orginal rotation of the object
 
+            //
+            newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveToSpawn);
+
             yield return new WaitForSeconds(waveToSpawn.GetTimeBetweenSpawns());
+        }
+    }
+
+    private IEnumerator SpawnAllWaves()
+    {
+        //access each wave I have in waveConfigsList
+        //ant wait for all the enemies in that wave to spawn
+        //before looping again
+        foreach(WaveConfig currentWave in waveConfigsList)//currentWave in loop is not the same var as other currentWave
+        {
+            //before yielding and returning, spawn all enemies in wave
+            yield return StartCoroutine(SpawnAllEnemiesInWave(currentWave));
         }
     }
 }
