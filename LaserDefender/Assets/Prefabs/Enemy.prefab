@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6147410947221077619}
   - component: {fileID: 6147410947221077618}
   - component: {fileID: -8476418006873490062}
+  - component: {fileID: 6839496630648951517}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -95,3 +96,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16a656b6eb6a08248a6e0507f424c012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waypointsList: []
+  waveConfig: {fileID: 0}
+--- !u!114 &6839496630648951517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6147410947221077617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3ea64d809b07a84091f673c58de8d5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  ShotCounter: 0
+  minTimeBetweenShots: 0.2
+  maxTimeBetweenShots: 3
+  enemyLaserPrefab: {fileID: 7231132158714311733, guid: 736e651bf739ee1409fc41005779c5ef, type: 3}
+  enemyLaserSpeed: 5
