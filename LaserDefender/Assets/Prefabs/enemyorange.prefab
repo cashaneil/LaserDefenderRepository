@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 687497601949129954}
   - component: {fileID: -1273278581136667090}
   - component: {fileID: 646880119048393792}
-  m_Layer: 0
+  - component: {fileID: -297038880093085100}
+  m_Layer: 10
   m_Name: enemyorange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,3 +117,44 @@ MonoBehaviour:
   maxTimeBetweenShots: 3
   enemyLaserPrefab: {fileID: 7231132158714311733, guid: 736e651bf739ee1409fc41005779c5ef, type: 3}
   enemyLaserSpeed: 5
+--- !u!60 &-297038880093085100
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289250284651859243}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.04, y: 0.84}
+    newSize: {x: 1.04, y: 0.84}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.26, y: -0.42}
+      - {x: 0.28, y: -0.41}
+      - {x: 0.52, y: 0.03}
+      - {x: 0.52, y: 0.17999999}
+      - {x: 0.29, y: 0.26}
+      - {x: 0.17999999, y: 0.35999998}
+      - {x: 0.049999997, y: 0.42}
+      - {x: -0.08, y: 0.42}
+      - {x: -0.37, y: 0.22}
+      - {x: -0.52, y: 0.17999999}
+      - {x: -0.52, y: 0.02}
+      - {x: -0.26999998, y: -0.41}
+      - {x: -0.26, y: -0.42}
+      - {x: -0.03, y: -0.42}
+      - {x: 0.03, y: -0.35}
+      - {x: 0.049999997, y: -0.42}

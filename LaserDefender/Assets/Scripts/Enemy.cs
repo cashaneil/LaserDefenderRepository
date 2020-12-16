@@ -27,6 +27,9 @@ public class Enemy : MonoBehaviour
     {
         health -= dmg.GetDamage();
 
+        //destroy player laser
+        dmg.Hit();
+
         if (health <= 0)
         {
             Destroy(gameObject);

@@ -7,6 +7,7 @@ using UnityEngine.VFX;
 public class Player : MonoBehaviour
 {
     //serialize field makes the variable editable from Unity Editor
+    [SerializeField] int health = 100;
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] GameObject laserPrefab; //a prefab, is something that isn't created with the start of the program, but only when needed. In the case, the laser spawns only when needed.
     [SerializeField] float laserSpeed = 15;
@@ -117,6 +118,28 @@ public class Player : MonoBehaviour
             //code to start coroutine
             StopCoroutine(fireCoroutine);
             coroutineStarted = false;
+        }
+    }
+
+    //reduce enemy health whenever enemy collides with a
+    //gameObject that has a DamageDealer component
+    private void OnTriggerEnter2D(Collider2D otherObject)
+    {
+        //access DamageDealer from otherObject that hit the enemy
+        //and reduce health accordingly
+        DamageDealer dmg = otherObject.gameObject.GetComponent<DamageDealer>(); //getting the DamageDealer component and saving it in dmg
+        ProcessHit(dmg);
+    }
+
+    private void ProcessHit(DamageDealer dmg)
+    {
+        health -= dmg.GetDamage();
+
+        dmg.Hit();
+
+        if (health <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 }
