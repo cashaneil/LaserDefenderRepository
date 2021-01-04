@@ -34,7 +34,7 @@ public class WaveConfig : ScriptableObject //scriptable object is an object that
         //each wave can have different number of waypoints
         var WaveWaypoints = new List<Transform>();
 
-        //access the Path prefab, read eac waypoint and add each waypoint to the new list
+        //access the Path prefab, read each waypoint and add each waypoint to the new list
         foreach (Transform child in pathPrefab.transform)
         {
             WaveWaypoints.Add(child);

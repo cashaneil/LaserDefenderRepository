@@ -13,6 +13,15 @@ public class Enemy : MonoBehaviour
     [SerializeField] GameObject enemyLaserPrefab;
     [SerializeField] float enemyLaserSpeed = 5f;
 
+    [SerializeField] GameObject deathVFX;
+    [SerializeField] float explosionDuration = 1f;
+
+    [SerializeField] AudioClip enemyDeathSound;
+    [SerializeField] [Range(0, 1)] float enemyDeathSoundVolume = 0.75f;
+
+    [SerializeField] AudioClip enemyShootSound;
+    [SerializeField] [Range(0, 1)] float enemyShootSoundVolume = 0.3f;
+
     //reduce enemy health whenever enemy collides with a
     //gameObject that has a DamageDealer component
     private void OnTriggerEnter2D(Collider2D otherObject)
@@ -32,9 +41,21 @@ public class Enemy : MonoBehaviour
 
         if (health <= 0)
         {
-            Destroy(gameObject);
+            Die();
         }
     }
+
+    private void Die()
+    {
+        //destroy enemy
+        Destroy(gameObject);
+        //instantiate explosion effects
+        GameObject explosion = Instantiate(deathVFX, transform.position, Quaternion.identity);
+        //destroy the explosion after 1 sec
+        Destroy(explosion, explosionDuration);
+        AudioSource.PlayClipAtPoint(enemyDeathSound, Camera.main.transform.position, enemyDeathSoundVolume);
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -67,5 +88,6 @@ public class Enemy : MonoBehaviour
     {
         GameObject laser = Instantiate(enemyLaserPrefab, transform.position, Quaternion.identity) as GameObject;
         laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -enemyLaserSpeed);
+        AudioSource.PlayClipAtPoint(enemyShootSound, Camera.main.transform.position, enemyShootSoundVolume);
     }
 }

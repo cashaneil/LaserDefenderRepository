@@ -41,7 +41,7 @@ public class EnemySpawner : MonoBehaviour
                 waveToSpawn.GetWaypointsList()[0].transform.position,
                 Quaternion.identity) as GameObject;//Quaternion.identity means to keep the orginal rotation of the object
 
-            //
+            //setting the wave as a component to the enemy
             newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveToSpawn);
 
             yield return new WaitForSeconds(waveToSpawn.GetTimeBetweenSpawns());

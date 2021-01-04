@@ -13,6 +13,12 @@ public class Player : MonoBehaviour
     [SerializeField] float laserSpeed = 15;
     [SerializeField] float LaserFiringTime = 0.2f;
 
+    [SerializeField] AudioClip playerDeathSound;
+    [SerializeField] [Range(0, 1)] float playerDeathSoundVolume = 0.75f;
+
+    [SerializeField] AudioClip playerShootSound;
+    [SerializeField] [Range(0, 1)] float playerShootSoundVolume = 0.3f;
+
     bool coroutineStarted = false;
 
     float xMin, xMax, yMin, yMax;
@@ -57,6 +63,7 @@ public class Player : MonoBehaviour
             //velocity value is applied according to var laserSpeed
             //the laser was given a body so that we are able to apply the laws of physics to it
             laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
+            AudioSource.PlayClipAtPoint(playerShootSound, Camera.main.transform.position, playerShootSoundVolume);
             //wait for 0.2 seconds
             yield return new WaitForSeconds(LaserFiringTime);
         }
@@ -139,7 +146,13 @@ public class Player : MonoBehaviour
 
         if (health <= 0)
         {
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    private void Die()
+    {
+        Destroy(gameObject);
+        AudioSource.PlayClipAtPoint(playerDeathSound, Camera.main.transform.position, playerDeathSoundVolume);
     }
 }
