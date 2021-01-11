@@ -29,6 +29,12 @@ public class Enemy : MonoBehaviour
         //access DamageDealer from otherObject that hit the enemy
         //and reduce health accordingly
         DamageDealer dmg = otherObject.gameObject.GetComponent<DamageDealer>(); //getting the DamageDealer component and saving it in dmg
+        
+        //if the object doesn't have a damage dealer end the method
+        if (!dmg)
+        {
+            return; //end the method
+        }
         ProcessHit(dmg);
     }
 

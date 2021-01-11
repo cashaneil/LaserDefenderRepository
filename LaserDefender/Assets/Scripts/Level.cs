@@ -5,6 +5,15 @@ using UnityEngine.SceneManagement; //this has to be used in this case, for scene
 
 public class Level : MonoBehaviour
 {
+    [SerializeField] float delayInSeconds = 2f;
+
+    //waits 2 seconds and then load the game over scene
+    IEnumerator WaitAndLoad()
+    {
+        yield return new WaitForSeconds(delayInSeconds);
+        SceneManager.LoadScene("GameOver");
+    }
+
     public void LoadGame()
     {
         SceneManager.LoadScene("LaserDefender");
@@ -12,7 +21,7 @@ public class Level : MonoBehaviour
 
     public void LoadGameOver()
     {
-        SceneManager.LoadScene("GameOver");
+        StartCoroutine(WaitAndLoad());
     }
 
     public void LoadStartMenu()
