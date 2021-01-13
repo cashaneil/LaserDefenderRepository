@@ -42,6 +42,12 @@ public class Player : MonoBehaviour
         Move();
         Fire();
     }
+
+    public int GetHealth()
+    {
+        return health;
+    }
+
     ////coroutine example
     //private IEnumerator PrintAndWait()
     //{
@@ -128,11 +134,11 @@ public class Player : MonoBehaviour
         }
     }
 
-    //reduce enemy health whenever enemy collides with a
+    //reduce player health whenever player collides with a
     //gameObject that has a DamageDealer component
     private void OnTriggerEnter2D(Collider2D otherObject)
     {
-        //access DamageDealer from otherObject that hit the enemy
+        //access DamageDealer from otherObject that hit the player
         //and reduce health accordingly
         DamageDealer dmg = otherObject.gameObject.GetComponent<DamageDealer>(); //getting the DamageDealer component and saving it in dmg
         ProcessHit(dmg);
@@ -146,6 +152,7 @@ public class Player : MonoBehaviour
 
         if (health <= 0)
         {
+            health = 0;
             Die();
         }
     }

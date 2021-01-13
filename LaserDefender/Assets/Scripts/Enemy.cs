@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] float health = 100;
+    [SerializeField] int scoreValue = 10;
 
     [SerializeField] float ShotCounter;
     [SerializeField] float minTimeBetweenShots = 0.2f;
@@ -53,6 +54,9 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
+        //add scoreValue to 
+        FindObjectOfType<GameSession>().AddToScore(scoreValue);
+        
         //destroy enemy
         Destroy(gameObject);
         //instantiate explosion effects
